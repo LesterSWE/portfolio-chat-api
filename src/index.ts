@@ -5,6 +5,7 @@ const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
 const ALLOWED_ORIGINS = [
   'https://www.lesterdominguez.com',
+  'https://lesterdominguez.com',
   'http://localhost:5173',
 ];
 
