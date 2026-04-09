@@ -1,0 +1,19 @@
+{
+  "name": "portfolio-chat-api",
+  "version": "1.0.0",
+  "description": "Cloud Function proxy for portfolio AI chat assistant",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "NODE_ENV=development npx @google-cloud/functions-framework --target=chat",
+    "deploy": "gcloud functions deploy chat --gen2 --runtime=nodejs20 --region=us-east1 --trigger-http --allow-unauthenticated --set-env-vars ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY --entry-point=chat"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "@google-cloud/functions-framework": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.5.0"
+  }
+}
