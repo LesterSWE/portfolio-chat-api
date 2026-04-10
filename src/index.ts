@@ -3,6 +3,23 @@ import type { HttpFunction } from '@google-cloud/functions-framework';
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
+// Rate limiting: max 20 requests per IP per hour
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+const RATE_LIMIT = 20;
+const RATE_WINDOW_MS = 60 * 60 * 1000;
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const entry = rateLimitMap.get(ip);
+  if (!entry || now > entry.resetAt) {
+    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_WINDOW_MS });
+    return false;
+  }
+  if (entry.count >= RATE_LIMIT) return true;
+  entry.count++;
+  return false;
+}
+
 const ALLOWED_ORIGINS = [
   'https://www.lesterdominguez.com',
   'https://lesterdominguez.com',
@@ -36,14 +53,41 @@ Lester Dominguez is a Fullstack Software Engineer based in the New York City are
 
 ## Skills
 
-**Languages & Frameworks:** JavaScript, TypeScript, Python, Node.js, React, Next.js, React Native, Express.js, SQL
-**Tools & Platforms:** Google Cloud Functions, Firebase, BigQuery, Redis, PostgreSQL, Git, REST APIs, OAuth, Docker, AWS, CI/CD
-**Testing & Practices:** TDD, Mocha, Chai, Jasmine, Functional Programming, Schema Design, AI/LLM Integration
+**Languages & Frameworks:** JavaScript, TypeScript, Python, Node.js, React, Express.js, SQL, Tailwind CSS
+**Tools & Platforms:** Google Cloud Platform, Firebase, BigQuery, Redis, PostgreSQL, Supabase, Vercel, AWS Amplify, Railway, Git, REST APIs, OAuth, SSE / Streaming APIs
+**AI & Emerging Tech:** Claude API, Anthropic SDK, LLM Integration, AI Application Development, Prompt Engineering
+**Testing & Practices:** TDD, Mocha, Chai, Functional Programming, Schema Design, API Design
+
+## Projects
+
+Lester has built and deployed several side projects that are live and publicly accessible:
+
+**AI Chat Assistant** — The chatbot you're talking to right now. Built with the Claude API (Anthropic), streaming responses via SSE, deployed as a Google Cloud Function with rate limiting and CORS protection. The frontend is a React widget embedded in his portfolio.
+- GitHub: github.com/LesterSWE/portfolio-chat-api
+- Live: lesterdominguez.com
+
+**SQL Toolkit** — A web app for working with SQL using AI. Paste a query to get a plain-English explanation and optimization suggestions, or describe what data you need and have a query generated for you. Two tabs: Explain SQL and Write SQL. Built with React, Vite, and Vercel Edge Functions.
+- GitHub: github.com/LesterSWE/sql-explainer
+- Live: sql.lesterdominguez.com
+
+**Diamond Tracker** — A mobile-first little league stats tracker built for coaches. Logs at-bats, tracks pitch counts, enforces youth baseball rest day rules, and generates AI-powered game recaps to share with parents. Built with React, Supabase, and the Claude API.
+- GitHub: github.com/LesterSWE/diamond-tracker
+- Live: diamond-tracker.lesterdominguez.com
+
+**Webhook Debugger** — A real-time webhook inspection tool. Generates a unique endpoint URL — point any service at it and watch incoming requests appear instantly with full headers, body, and query parameters. Built with React on the frontend and a Node.js/Express server on Railway, connected via SSE.
+- GitHub: github.com/LesterSWE/webhook-debugger
+- Live: webhook-debugger.lesterdominguez.com
 
 ## Education
 
 - **B.S. in Business & Information Systems** — New Jersey Institute of Technology (2016–2019)
 - **Software Engineering Certificate** — Fullstack Academy, New York City (2019) — 17-week immersive fullstack JavaScript program
+
+## Personal
+
+Lester grew up in Elizabeth, NJ and still calls the New York City area home. He is a first-generation college graduate — something he's proud of. Outside of work, he stays active by running (he completed his first half marathon and has his sights set on a full one someday), coaches his son's little league team, plays chess (he'll be the first to tell you he's not great at it, but loves the game anyway), reads regularly, and unwinds with video games. He's also passionate about exploring AI and building with the latest language model technologies.
+
+Earlier in life, Lester ran for local public office. He didn't win, but it was a worthwhile experience and he made some lifelong friends along the way.
 
 ## Contact
 
@@ -75,6 +119,12 @@ export const chat: HttpFunction = async (req, res) => {
 
   if (req.method !== 'POST') {
     res.status(405).json({ error: 'Method not allowed' });
+    return;
+  }
+
+  const ip = (req.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim() ?? req.socket.remoteAddress ?? 'unknown';
+  if (isRateLimited(ip)) {
+    res.status(429).json({ error: 'Too many requests. Please try again later.' });
     return;
   }
 
