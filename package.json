@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "start": "NODE_ENV=development npx @google-cloud/functions-framework --target=chat",
-    "deploy": "gcloud functions deploy chat --gen2 --runtime=nodejs20 --region=us-east1 --trigger-http --allow-unauthenticated --set-env-vars ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY --entry-point=chat"
+    "deploy": "gcloud functions deploy chat --gen2 --runtime=nodejs22 --region=us-east1 --trigger-http --allow-unauthenticated --set-env-vars ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY --entry-point=chat"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",
