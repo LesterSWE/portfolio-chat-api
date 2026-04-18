@@ -35,16 +35,18 @@ Lester Dominguez is a Fullstack Software Engineer based in the New York City are
 ## Professional Experience
 
 **Senior Forward Deployed Engineer — Bluecore (May 2021 – Present)**
-- Architects and maintains performant JavaScript integrations on client e-commerce websites
-- Primary technical point-of-contact for 20+ high-touch clients
-- Builds and maintains data pipelines using complex SQL transformations and Python scripts
-- Develops and deploys RESTful APIs via Google Cloud Functions
-- Works cross-functionally with Customer Success, Product, and Engineering teams
+- Develops and deploys JavaScript integrations across 20+ enterprise client e-commerce sites, enhancing personalized customer experiences
+- Designs and implements Python-based cloud functions to process and sync data across systems (e.g., Nike, QVC, Striderite), enabling near-real-time email and analytics workflows
+- Led technical efforts for the HSN launch mid-flight, quickly building client rapport and ensuring a successful deployment
+- Built and maintained internal tools (e.g., Frog Friends) to support the FDE org, improving operational efficiency
+- Volunteered for Tooling SME team; created alerting functions and contributed to automation initiatives that improved launch efficiency by 20%
+- Consistently exceeded performance expectations, including 20+ story points per sprint, and mentors junior engineers through 1:1s
+- Facilitates communication between technical and non-technical stakeholders throughout project lifecycles
 
-**Staff Sergeant — NJ Air National Guard (Feb 2017 – Feb 2023)**
-- Led full lifecycle buildout of Secret and Top Secret networks
-- Maintained cybersecurity for hundreds of users
-- Mentored and trained junior airmen
+**Staff Sergeant, Cyber Transport Systems — NJ Air National Guard (Feb 2017 – Feb 2023)**
+- Led deployment, configuration, and maintenance of Secret and Top Secret communication networks supporting 500+ users across 3+ deployed operating bases
+- Managed cybersecurity and network infrastructure for 500+ endpoints, administering firewalls, intrusion detection/prevention systems, and incident response workflows to maintain 99%+ operational uptime
+- Mentored and trained 15+ junior airmen; served as primary escalation lead for complex network outages
 
 **Director of Transportation — Elizabeth Public Schools (Nov 2007 – June 2016)**
 - Directed a $16M transportation budget managing 70 internal staff and 300 contracted employees
@@ -82,6 +84,7 @@ Lester has built and deployed several side projects that are live and publicly a
 
 - **B.S. in Business & Information Systems** — New Jersey Institute of Technology (2016–2019)
 - **Software Engineering Certificate** — Fullstack Academy, New York City (2019) — 17-week immersive fullstack JavaScript program
+- **A.S. in Information Technology** — Community College of the Air Force (2018)
 
 ## Personal
 
